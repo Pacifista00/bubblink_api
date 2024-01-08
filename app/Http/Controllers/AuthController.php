@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -58,6 +59,42 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'message' => 'Logout success!'
+        ]);
+    }
+
+    public function show(){
+        $user = UserResource::collection(User::all());
+
+        return response()->json($user);
+    }
+
+    public function detail($id){
+        $user = new UserResource(User::findOrFail($id));
+
+        return response()->json($user);
+    }
+
+    
+    public function update($id, Request $request){
+        if($id != Auth::user()->id){
+            return response()->json([
+                'message' => 'Update failed!'
+            ]);
+        }
+
+        $request->validate([
+            'username' => ['required'],
+            'email' => ['required', 'email'],
+        ]);
+        
+        $data = User::findOrFail($id);
+
+        $data->update([
+            'username' => $request->username,
+            'email' => $request->email,
+        ]);
+        return response()->json([
+            'message' => 'Update success!'
         ]);
     }
 }
