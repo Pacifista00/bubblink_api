@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -29,7 +30,8 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role_id' => 2
+            'role_id' => 2,
+            'picture_path' => 'pictures\profile.jpg',
         ]);
 
         return response()->json([
@@ -87,8 +89,7 @@ class AuthController extends Controller
         }
 
         $request->validate([
-            'username' => ['required'],
-            'email' => ['required', 'email'],
+            
         ]);
         
         $data = User::findOrFail($id);
@@ -97,6 +98,32 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
         ]);
+        return response()->json([
+            'message' => 'Update success!'
+        ]);
+    }
+    public function updatePicture($id, Request $request){
+        if($id != Auth::user()->id){
+            return response()->json([
+                'message' => 'Update failed!'
+            ]);
+        }
+
+        $request->validate([
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+        
+        $data = User::findOrFail($id);
+
+        if($data->picture_path != 'pictures\profile.jpg'){
+            Storage::delete($data->picture_path);
+        }
+
+
+        $data->update([
+            'picture_path' => $request->file('picture')->store('pictures'),
+        ]);
+
         return response()->json([
             'message' => 'Update success!'
         ]);

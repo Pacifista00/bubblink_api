@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // user
     Route::get('/user/{id}', [AuthController::class, 'detail']);
     Route::put('/user/{id}', [AuthController::class, 'update']);
+    Route::post('/user/{id}/picture', [AuthController::class, 'updatePicture']);
 
     // post
     Route::post('/post', [PostController::class, 'store']);
