@@ -14,10 +14,17 @@ class PostController extends Controller
             'content' => ['required'],
         ]);
 
-        Post::create([
+        $data = [
             'content' => $request->content,
             'user_id' => Auth::user()->id
-        ]);
+        ];
+
+        if($request->hasFile('image')){
+            $data['image_path'] = $request->file('image')->store('post_images');
+        }
+
+        Post::create($data);
+
         return response()->json([
             'message' => 'Post added!'
         ]);
