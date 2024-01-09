@@ -63,7 +63,7 @@ class AuthController extends Controller
     }
 
     public function show(){
-        $user = UserResource::collection(User::all());
+        $users = UserResource::collection(User::all());
 
         return response()->json($user);
     }
