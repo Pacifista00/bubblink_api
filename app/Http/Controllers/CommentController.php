@@ -27,11 +27,15 @@ class CommentController extends Controller
 
     public function show(){
         $comments = CommentResource::collection(Comment::all());
-        return response()->json($comments);
+        return response()->json([
+            'data' => $comments
+        ]);
     }
     public function commentDetail($id){
         $comment = new CommentResource(Comment::findOrFail($id));
-        return response()->json($comment);
+        return response()->json([
+            'data' => $comment
+        ]);
     }
 
     public function update($id, Request $request){

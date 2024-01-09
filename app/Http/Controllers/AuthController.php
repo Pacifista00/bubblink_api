@@ -65,13 +65,17 @@ class AuthController extends Controller
     public function show(){
         $users = UserResource::collection(User::all());
 
-        return response()->json($user);
+        return response()->json([
+            'data' => $users
+        ]);
     }
 
     public function detail($id){
         $user = new UserResource(User::findOrFail($id));
 
-        return response()->json($user);
+        return response()->json([
+            'data' => $user
+        ]);
     }
 
     

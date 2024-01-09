@@ -25,11 +25,15 @@ class PostController extends Controller
 
     public function postDetail(){
         $posts = PostResource::collection(Post::all());
-        return response()->json($posts);
+        return response()->json([
+            'data' => $posts
+        ]);
     }
     public function show($id){
         $post = new PostResource(Post::findOrFail($id));
-        return response()->json($post);
+        return response()->json([
+            'data' => $post
+        ]);
     }
     
     public function update($id, Request $request){
