@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 
@@ -30,12 +31,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // users
-    Route::get('/users', [AuthController::class, 'show']);
+    Route::get('/users', [UserController::class, 'show']);
 
     // user
-    Route::get('/user/{id}', [AuthController::class, 'detail']);
-    Route::put('/user/{id}', [AuthController::class, 'update']);
-    Route::post('/user/{id}/picture', [AuthController::class, 'updatePicture']);
+    Route::get('/user/{id}', [UserController::class, 'detail']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
+    Route::post('/user/{id}/picture', [UserController::class, 'updatePicture']);
 
     // post
     Route::post('/post', [PostController::class, 'store']);
