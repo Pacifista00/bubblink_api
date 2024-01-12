@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function loggedUser(){
+        $id = Auth::user()->id;
+        $user = new UserResource(User::findOrFail($id));
+
+        return response()->json([
+            'data' => $user
+        ]);
+    }
     public function show(){
         $users = UserResource::collection(User::all());
 
