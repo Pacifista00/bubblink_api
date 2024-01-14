@@ -36,6 +36,13 @@ class PostController extends Controller
             'data' => $posts
         ]);
     }
+    public function myPost(){
+        $id = Auth::user()->id;
+        $post = new PostResource(Post::findOrFail($id));
+        return response()->json([
+            'data' => $post
+        ]);
+    }
     public function postDetail($id){
         $post = new PostResource(Post::findOrFail($id));
         return response()->json([
