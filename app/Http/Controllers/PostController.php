@@ -30,13 +30,13 @@ class PostController extends Controller
         ]);
     }
 
-    public function postDetail(){
+    public function show(){
         $posts = PostResource::collection(Post::all());
         return response()->json([
             'data' => $posts
         ]);
     }
-    public function show($id){
+    public function postDetail($id){
         $post = new PostResource(Post::findOrFail($id));
         return response()->json([
             'data' => $post
@@ -55,9 +55,15 @@ class PostController extends Controller
             'content' => ['required'],
         ]);
 
-        $post->update([
+        $dataRequest = [
             'content' => $request->content,
-        ]);
+        ];
+        if($request->hasFile('image')){
+            $dataRequest['image_path'] = $request->file('image')->store('post_images');
+        }
+        
+        $post->update($dataRequest);
+        
         return response()->json([
             'message' => 'Update success!'
         ]);

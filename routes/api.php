@@ -35,21 +35,21 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     // user
     Route::get('/loggeduser', [UserController::class, 'loggedUser']);
     Route::get('/user/{id}', [UserController::class, 'detail']);
-    Route::put('/user/{id}', [UserController::class, 'update']);
+    Route::post('/user/{id}', [UserController::class, 'update']);
     Route::post('/user/{id}/picture', [UserController::class, 'updatePicture']);
 
     // post
-    Route::get('/post', [PostController::class, 'store']);
-    Route::post('/posts', [PostController::class, 'postDetail']);
-    Route::get('/post/{id}', [PostController::class, 'show']);
-    Route::put('/post/{id}/update', [PostController::class, 'update']);
+    Route::post('/post', [PostController::class, 'store']);
+    Route::get('/posts', [PostController::class, 'show']);
+    Route::get('/post/{id}', [PostController::class, 'postDetail']);
+    Route::post('/post/{id}/update', [PostController::class, 'update']);
     Route::delete('/post/{id}/delete', [PostController::class, 'destroy']);
 
     // comment
     Route::post('/comment/{postId}', [CommentController::class, 'store']);
     Route::get('/comments', [CommentController::class, 'show']);
     Route::get('/comment/{id}', [CommentController::class, 'commentDetail']);
-    Route::put('/comment/{Id}/update', [CommentController::class, 'update']);
+    Route::post('/comment/{Id}/update', [CommentController::class, 'update']);
     Route::delete('/comment/{Id}/delete', [CommentController::class, 'destroy']);
     
 });
