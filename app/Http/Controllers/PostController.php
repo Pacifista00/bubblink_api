@@ -92,13 +92,4 @@ class PostController extends Controller
             'message' => 'Post deleted!'
         ]);
     }
-    public function addlike($id){
-        $post = Post::find($id);
-        $post->update([
-            'like' => $post->like+1
-        ]);
-        return response()->json([
-            'message' => 'Like Success!'
-        ]);
-    }
 }
