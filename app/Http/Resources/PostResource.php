@@ -21,7 +21,7 @@ class PostResource extends JsonResource
             'author_role' => $this->user->role->name,
             'author_image' => 'http://127.0.0.1:8000/storage/' . $this->user->picture_path,
             'like' => $this->like,
-            'created_at' => date_format($this->created_at, 'Y/m/d H:i:s'),
+            'created_at' => $this->created_at,
             'comment_count' => $this->comment->count(),
         ];
 

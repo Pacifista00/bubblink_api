@@ -25,19 +25,23 @@ use App\Http\Controllers\CommentController;
 // auth register & login
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
 // users
 Route::get('/users', [UserController::class, 'show']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     // logout
     Route::post('/logout', [AuthController::class, 'logout']);
-
+    
     // user
     Route::get('/loggeduser', [UserController::class, 'loggedUser']);
     Route::get('/user/{id}', [UserController::class, 'detail']);
     Route::post('/user/{id}/update', [UserController::class, 'update']);
     Route::post('/user/{id}/picture', [UserController::class, 'updatePicture']);
 
+    // search
+    Route::post('/search', [UserController::class, 'search']);
+    
     // post
     Route::post('/post', [PostController::class, 'store']);
     Route::get('/posts', [PostController::class, 'show']);

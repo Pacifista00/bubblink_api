@@ -90,4 +90,14 @@ class UserController extends Controller
             'message' => 'Update success!'
         ]);
     }
+    public function search(Request $request){
+        $query = $request->input('key');
+
+        $getUser = User::where('username', 'like', "%{$query}%")->get();
+        $users = UserResource::collection($getUser);
+
+        return response()->json([
+            'data' => $users
+        ]);
+    }
 }
