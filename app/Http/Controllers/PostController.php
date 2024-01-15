@@ -16,7 +16,8 @@ class PostController extends Controller
 
         $data = [
             'content' => $request->content,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'like' => 0,
         ];
 
         if($request->hasFile('image')){
@@ -38,9 +39,11 @@ class PostController extends Controller
     }
     public function myPost(){
         $id = Auth::user()->id;
-        $post = new PostResource(Post::findOrFail($id));
+        $posts = Post::where('user_id', $id)->get();
+        $postResource = PostResource::collection($posts);
+
         return response()->json([
-            'data' => $post
+            'data' => $postResource,
         ]);
     }
     public function postDetail($id){
@@ -87,6 +90,15 @@ class PostController extends Controller
         $post->delete();
         return response()->json([
             'message' => 'Post deleted!'
+        ]);
+    }
+    public function addlike($id){
+        $post = Post::find($id);
+        $post->update([
+            'like' => $post->like+1
+        ]);
+        return response()->json([
+            'message' => 'Like Success!'
         ]);
     }
 }

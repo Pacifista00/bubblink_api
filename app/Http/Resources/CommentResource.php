@@ -19,6 +19,7 @@ class CommentResource extends JsonResource
             'content' => $this->content,
             'post_id' => $this->post_id,
             'author' => $this->user->username,
+            'author_image' => 'http://127.0.0.1:8000/storage/' . $this->user->picture_path,
             'created_at' => date_format($this->created_at, 'Y-m-d H:i:s')
         ];
     }

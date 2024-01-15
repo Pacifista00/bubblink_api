@@ -25,10 +25,13 @@ class CommentController extends Controller
         ]);
     }
 
-    public function show(){
+    public function show($postId){
+        $comments = Comment::where('post_id', $postId)->get();
+        $commentResource = CommentResource::collection($comments);
+
         $comments = CommentResource::collection(Comment::all());
         return response()->json([
-            'data' => $comments
+            'data' => $commentResource
         ]);
     }
     public function commentDetail($id){

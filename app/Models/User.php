@@ -13,7 +13,7 @@ class User extends Model
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'username','email','password','role_id','picture_path'
+        'username','email','password','role_id','picture_path','bio'
     ];
 
     public function role(){

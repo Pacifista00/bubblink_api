@@ -47,12 +47,19 @@ class UserController extends Controller
             
         ]);
         
-        $data = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        $data->update([
+        $data = [
             'username' => $request->username,
             'email' => $request->email,
-        ]);
+        ];
+
+        if($request->bio){
+            $data['bio'] = $request->bio;
+        }
+
+
+        $user->update($data);
         return response()->json([
             'message' => 'Update success!'
         ]);
@@ -70,7 +77,7 @@ class UserController extends Controller
         
         $data = User::findOrFail($id);
 
-        if($data->picture_path != 'pictures\profile.jpg'){
+        if($data->picture_path != 'pictures/profile.jpg'){
             Storage::delete($data->picture_path);
         }
 
