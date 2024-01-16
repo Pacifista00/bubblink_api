@@ -37,9 +37,8 @@ class PostController extends Controller
             'data' => $posts
         ]);
     }
-    public function myPost(){
-        $id = Auth::user()->id;
-        $posts = Post::where('user_id', $id)->get();
+    public function peoplePost($userid){
+        $posts = Post::where('user_id', $userid)->get();
         $postResource = PostResource::collection($posts);
 
         return response()->json([
